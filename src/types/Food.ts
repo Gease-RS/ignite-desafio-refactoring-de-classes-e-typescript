@@ -6,3 +6,10 @@ export interface IFoodPlate {
     description: string;
     available: boolean;
   }
+
+  export interface AddFood {
+    name: string;
+    image: string;
+    price: string;
+    description: string;
+  }
