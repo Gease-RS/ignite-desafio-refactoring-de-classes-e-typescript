@@ -7,13 +7,6 @@ import ModalEditFood from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
 import { AddFood, IFoodPlate } from '../../types/Food';
 
-interface IFood {
-    name: string;
-    image: string;
-    price: string;
-    description: string;
-}
-
 const Dashboard = () => {
   const [foods, setFoods] = useState<IFoodPlate[]>([]);
   const [editingFood, setEditingFood] = useState<IFoodPlate>({} as IFoodPlate);
@@ -45,12 +38,15 @@ const Dashboard = () => {
     setEditingFood(food)
   }
 
-  async function handleDeleteFood(id : number) {
-    await api.delete(`/foods/${id}`)
-    const updatedFoods = foods.filter((food: { id: number; }) => food.id !== id)
-    setFoods(updatedFoods)
+  async function handleDeleteFood(id: number) {
+    try {
+      await api.delete(`/foods/${id}`);
+      setFoods(foods.filter(food => food.id !== id));
+    } catch (err) {
+      console.log(err);
+    }
   }
-
+  
   function toggleModal() {
     setModalOpen(!modalOpen)
   }
@@ -73,19 +69,6 @@ const Dashboard = () => {
   }
 }
 
-  /*
-  async function handleUpdateFood(food: Omit<IFoodPlate, 'id' | 'available'>): Promise<void> {
-    const response = await api.put(`/foods/${editingFood.id}`, 
-    {
-      ...editingFood,
-      ...food
-    }
-    )
-    const updatedFoods = foods.map((f => f.id !==  response.data.id ? f : response.data))
-    setFoods(updatedFoods)
-    setEditingFood({} as IFoodPlate)
-  }
-*/
     return (
       <>
         <Header openModal={toggleModal} />

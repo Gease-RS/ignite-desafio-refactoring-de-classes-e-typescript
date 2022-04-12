@@ -14,14 +14,6 @@ interface FoodProps {
 function Food({ food, handleDelete, handleEditFood }: FoodProps) {
   const [isAvailable, setIsAvailable] = useState(food.available);
   
-  async function handleDeleteFood(id: number) {
-    try {
-      await api.delete(`/foods/${id}`);
-      handleDelete(id);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   async function toggleAvailable() {
     const updatedFood = {
@@ -64,7 +56,7 @@ function Food({ food, handleDelete, handleEditFood }: FoodProps) {
           <button 
             type="button"
             className="icon"
-            onClick={() => handleDeleteFood(food.id)}
+            onClick={() => handleDelete(food.id)}
             data-testid={`remove-food-${food.id}`}
           >
             <FiTrash size={20} />

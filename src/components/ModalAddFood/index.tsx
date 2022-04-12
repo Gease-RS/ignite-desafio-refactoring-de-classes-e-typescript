@@ -14,14 +14,13 @@ interface ModalAddFoodProps {
 }
 
 export default function ModalAddFood({ isOpen, setIsOpen, handleAddFood }: ModalAddFoodProps) {
+  const formRef = createRef<FormHandles>();
   
   async function handleSubmit(data: AddFood) {
     handleAddFood(data);
     setIsOpen();
   }
-  
-  const formRef = createRef<FormHandles>();
-  
+    
     return (
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
         <Form ref={formRef} onSubmit={handleSubmit}>
